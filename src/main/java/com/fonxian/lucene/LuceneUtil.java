@@ -104,7 +104,9 @@ public class LuceneUtil {
             Directory dictionary = new SimpleFSDirectory(FileSystems.getDefault().getPath(path));
             DirectoryReader reader = DirectoryReader.open(dictionary);
             IndexSearcher searcher = new IndexSearcher(reader);
+            //创建查询对象（默认搜索域，分词器）
             QueryParser parser = new QueryParser("content", ANALYZER);
+            //查询语法
             Query query = parser.parse(q);
             DuplicateFilter filter = new DuplicateFilter("content");
             filter.setKeepMode(DuplicateFilter.KeepMode.KM_USE_FIRST_OCCURRENCE);
