@@ -26,7 +26,7 @@ public class IndexTest {
 //            throw new IllegalArgumentException("Usage: java " + IndexTest.class.getName()
 //                    + " <index dir> <data dir>");
 //        }
-        String rootPath = "/Users/fangzhijie/opensource/searchengine/surfbird-search";
+        String rootPath = "/Users/fangzhijie/opensource/searchengine/surfbird-search/src/main/resources/lucene";
         String indexDir = rootPath + "/index";         //1 指定目录创建索引
         String dataDir = rootPath + "/data";          //2 对指定目录中的*.txt文件进行索引
 

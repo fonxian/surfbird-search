@@ -19,7 +19,6 @@ import java.nio.file.Paths;
 /**
  * Created by fangzhijie on 2019/2/28.
  */
-
 public class SearchTest {
 
     public static void search(String indexDir, String q)
@@ -42,8 +41,12 @@ public class SearchTest {
                 q + "':");                                   // 6
 
         for (ScoreDoc scoreDoc : hits.scoreDocs) {
-            Document doc = searcher.doc(scoreDoc.doc);               //7 返回匹配文本
+            Document doc = searcher.doc(scoreDoc.doc);//7 返回匹配文本
+            System.out.println("---------------------------");
+            System.out.println("评分:" + scoreDoc.score);
             System.out.println(doc.get("fullpath"));  //8 显示匹配文件名
+            System.out.println("---------------------------");
+
         }
 
         reader.close();                                //9 关闭IndexSearcher
@@ -52,7 +55,7 @@ public class SearchTest {
     public static void main(String[] args) {
         String rootPath = "/Users/fangzhijie/opensource/searchengine/surfbird-search";
         String indexDir = rootPath + "/index";         //1 指定目录创建索引
-        String q = "网站"; //查询这个字符串
+        String q = "王者荣耀"; //查询这个字符串
         try {
             search(indexDir, q);
         } catch (Exception e) {

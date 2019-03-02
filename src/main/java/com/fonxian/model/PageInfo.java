@@ -13,6 +13,7 @@ import java.util.List;
  * @since 2016-05-23 22:26
  */
 public class PageInfo implements Serializable {
+
     private static final long serialVersionUID = 1L;
     //当前页
     private int pageNum;
