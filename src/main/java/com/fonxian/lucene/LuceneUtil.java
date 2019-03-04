@@ -110,14 +110,20 @@ public class LuceneUtil {
             Query query = parser.parse(q);
             DuplicateFilter filter = new DuplicateFilter("content");
             filter.setKeepMode(DuplicateFilter.KeepMode.KM_USE_FIRST_OCCURRENCE);
+            //获取搜索结果
             TopDocs topDocs = searcher.search(query, filter, (pageNum + 1) * pageSize);
+            //从搜索结果对象中获取结果集
             ScoreDoc[] hits = topDocs.scoreDocs;
+            //文档命中数
             Integer total = topDocs.totalHits;
             List<Map<String, String>> result = new ArrayList<Map<String, String>>();
             int start = (pageNum - 1) * pageSize;
             int end = start + pageSize;
+            //此处需要优化，若返回结果集过大，可能会超出内存
+            //TODO
             for (int i = start; i < end && i < total; i++) {
                 Map<String, String> map = new HashMap<String, String>();
+                //通过文档ID从磁盘中获取对应文档
                 Document hitDoc = searcher.doc(hits[i].doc);
                 for (Iterator<IndexableField> iter = hitDoc.iterator(); iter.hasNext(); ) {
                     IndexableField field = iter.next();
