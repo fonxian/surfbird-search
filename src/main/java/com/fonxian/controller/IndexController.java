@@ -46,12 +46,13 @@ public class IndexController {
     @RequestMapping("index")
     public
     @ResponseBody
-    ModelMap index(@RequestParam(required = false, defaultValue = "10") Integer tc,
-                   @RequestParam(required = false, defaultValue = "https://www.cnblogs.com/#p3") String url) {
+    ModelMap index(@RequestParam(required = false, defaultValue = "1") Integer tc,
+                   @RequestParam(required = false, defaultValue = "https://www.cnblogs.com/#p1") String url) {
         ModelMap result = new ModelMap();
         Spider spider = start();
         if (spider != null) {
-            spider.addUrl(url).thread(tc).start();
+            spider.addUrl(url);
+            spider.thread(tc).start();
             result.put("msg", "启动爬虫开始索引数据");
         } else {
             result.put("msg", "爬虫已经启动，无法同时多个任务");

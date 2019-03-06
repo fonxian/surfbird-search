@@ -5,6 +5,8 @@ package com.fonxian.test;
  */
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -84,11 +86,11 @@ public class IndexTest {
 
     protected Document getDocument(File f) throws Exception {
         Document doc = new Document();
-        doc.add(new Field("contents", new FileReader(f)));      //7 索引文件内容
-        doc.add(new Field("filename", f.getName(),              //8 索引文件名
-                Field.Store.YES, Field.Index.NOT_ANALYZED));//8
-        doc.add(new Field("fullpath", f.getCanonicalPath(),     //9 索引文件完整路径
-                Field.Store.YES, Field.Index.NOT_ANALYZED));//9
+        doc.add(new TextField("contents", new FileReader(f)));      //7 索引文件内容
+        doc.add(new StringField("filename", f.getName(),              //8 索引文件名
+                Field.Store.YES));//8
+        doc.add(new StringField("fullpath", f.getCanonicalPath(),     //9 索引文件完整路径
+                Field.Store.YES));//9
         return doc;
     }
 

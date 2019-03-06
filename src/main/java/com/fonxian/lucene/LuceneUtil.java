@@ -12,7 +12,6 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.sandbox.queries.DuplicateFilter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -108,10 +107,10 @@ public class LuceneUtil {
             QueryParser parser = new QueryParser("content", ANALYZER);
             //查询语法
             Query query = parser.parse(q);
-            DuplicateFilter filter = new DuplicateFilter("content");
-            filter.setKeepMode(DuplicateFilter.KeepMode.KM_USE_FIRST_OCCURRENCE);
+//            DuplicateFilter filter = new DuplicateFilter("content");
+//            filter.setKeepMode(DuplicateFilter.KeepMode.KM_USE_FIRST_OCCURRENCE);
             //获取搜索结果
-            TopDocs topDocs = searcher.search(query, filter, (pageNum + 1) * pageSize);
+            TopDocs topDocs = searcher.search(query, (pageNum + 1) * pageSize);
             //从搜索结果对象中获取结果集
             ScoreDoc[] hits = topDocs.scoreDocs;
             //文档命中数
