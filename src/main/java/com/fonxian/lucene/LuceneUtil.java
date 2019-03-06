@@ -19,6 +19,7 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.springframework.util.ResourceUtils;
+import sun.text.normalizer.VersionInfo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -49,6 +50,25 @@ public class LuceneUtil {
     }
 
     /**
+     * 删除索引
+     */
+    public synchronized static void delIndex() {
+
+        try {
+            Directory dictionary = getIndexDocument();
+            IndexWriterConfig indexWriterConfig = new IndexWriterConfig(ANALYZER);
+            IndexWriter indexWriter = new IndexWriter(dictionary, indexWriterConfig);
+            indexWriter.deleteAll();
+            indexWriter.commit();
+            indexWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    /**
      * 索引数据
      */
     public synchronized static Index newIndex() {
@@ -57,11 +77,7 @@ public class LuceneUtil {
             if (index != null) {
                 return index;
             }
-            String path = ResourceUtils.getFile(INDEX_PATH).getPath();
-            if (path.startsWith("/")) {
-                path = path.substring(1);
-            }
-            Directory dictionary = new SimpleFSDirectory(FileSystems.getDefault().getPath(path));
+            Directory dictionary = getIndexDocument();
             IndexWriterConfig indexWriterConfig = new IndexWriterConfig(ANALYZER);
             indexWriterConfig.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
             IndexWriter indexWriter = new IndexWriter(dictionary, indexWriterConfig);
@@ -96,11 +112,7 @@ public class LuceneUtil {
      */
     public static PageInfo query(String q, int pageNum, int pageSize) {
         try {
-            String path = ResourceUtils.getFile(INDEX_PATH).getPath();
-            if (path.startsWith("/")) {
-                path = path.substring(1);
-            }
-            Directory dictionary = new SimpleFSDirectory(FileSystems.getDefault().getPath(path));
+            Directory dictionary = getIndexDocument();
             DirectoryReader reader = DirectoryReader.open(dictionary);
             IndexSearcher searcher = new IndexSearcher(reader);
             //创建查询对象（默认搜索域，分词器）
@@ -140,6 +152,21 @@ public class LuceneUtil {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * 获取索引文件
+     *
+     * @return
+     * @throws IOException
+     */
+    private static Directory getIndexDocument() throws IOException {
+        String path = ResourceUtils.getFile(INDEX_PATH).getPath();
+        if (path.startsWith("/")) {
+            path = path.substring(1);
+        }
+        return new SimpleFSDirectory(FileSystems.getDefault().getPath(path));
+
     }
 
 }

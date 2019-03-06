@@ -1,6 +1,7 @@
 
 package com.fonxian.controller;
 
+import com.fonxian.lucene.LuceneUtil;
 import com.fonxian.spider.CnblogProcessor;
 import com.fonxian.spider.LucenePipeline;
 import org.springframework.ui.ModelMap;
@@ -58,6 +59,16 @@ public class IndexController {
             result.put("msg", "爬虫已经启动，无法同时多个任务");
         }
         return result;
+    }
+
+    /**
+     * 删除索引
+     *
+     * @return
+     */
+    @RequestMapping("del")
+    public void del() {
+        LuceneUtil.delIndex();
     }
 
     /**
