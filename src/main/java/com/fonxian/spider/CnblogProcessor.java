@@ -11,7 +11,12 @@ import us.codecraft.webmagic.selector.PlainText;
 
 
 /**
- * Created by fangzhijie on 2019/3/2.
+ * <p>
+ * description
+ * </p >
+ *
+ * @author Michael Fang
+ * @since 2019-02-28
  */
 public class CnblogProcessor implements PageProcessor {
 
@@ -29,13 +34,12 @@ public class CnblogProcessor implements PageProcessor {
         Document document = Jsoup.parse(page.getHtml().toString());
 
         if (page.getUrl().regex(BLOG_LIST_REGEX).match()) {
-            System.out.println("当前链接href="+page.getUrl().toString());
+            System.out.println("当前链接href=" + page.getUrl().toString());
             Elements elements = document.select("#post_list div.post_item_body > h3 > a");
             for (Element element : elements) {
                 System.out.println(element.attr("href"));
                 page.addTargetRequest(element.attr("href"));
             }
-            page.setSkip(true);
             //获取页码
             String pageNum = PlainText.create(page.getUrl().toString()).regex(BLOG_LIST_REGEX).get();
             System.out.println("当前爬取页码=" + pageNum);
@@ -45,18 +49,17 @@ public class CnblogProcessor implements PageProcessor {
                 page.addTargetRequest(BLOG_LIST_PREFIX + (currentPageNum + 1));
             }
             //将当前页面设置为跳过
-
         } else if (page.getUrl().regex(BLOG_DETAIL_REGEX).match()) {
             String title = document.select("#cb_post_title_url").text();
             System.out.println("标题=" + title);
             String url = page.getUrl().toString();
-            System.out.println("url="+url);
+            System.out.println("url=" + url);
             String content = document.select("#topics").text();
             page.putField("title", title);
             page.putField("url", url);
             page.putField("content", content);
             //将当前页面设置为跳过
-            page.setSkip(true);
+
         }
 
     }

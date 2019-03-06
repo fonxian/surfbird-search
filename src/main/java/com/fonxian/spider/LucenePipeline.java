@@ -18,6 +18,14 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * <p>
+ * description
+ * </p >
+ *
+ * @author Michael Fang
+ * @since 2019-02-28
+ */
 public class LucenePipeline implements Pipeline, Closeable {
 
 

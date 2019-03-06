@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Created by fangzhijie on 2019/2/28.
+ * <p>
+ * 数据搜索 控制类
+ * </p >
+ *
+ * @author Michael Fang
+ * @since 2019-02-28
  */
 @RestController
 public class SearchController {

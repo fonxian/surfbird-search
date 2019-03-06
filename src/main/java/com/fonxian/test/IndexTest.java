@@ -1,7 +1,12 @@
 package com.fonxian.test;
 
 /**
- * Created by fangzhijie on 2019/2/28.
+ * <p>
+ * description
+ * </p >
+ *
+ * @author Michael Fang
+ * @since 2019-02-28
  */
 
 import org.apache.lucene.analysis.Analyzer;

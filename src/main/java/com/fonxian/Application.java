@@ -5,7 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
- * Created by fangzhijie on 2019/2/28.
+ * <p>
+ * description
+ * </p >
+ *
+ * @author Michael Fang
+ * @since 2019-02-28
  */
 @SpringBootApplication
 @EnableWebMvc

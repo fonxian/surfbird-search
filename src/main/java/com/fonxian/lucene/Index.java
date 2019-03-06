@@ -15,8 +15,12 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * @author lcc
- * @since 2016-05-22 12:11
+ * <p>
+ * description
+ * </p >
+ *
+ * @author Michael Fang
+ * @since 2019-02-28
  */
 public class Index {
     private IndexWriter writer;

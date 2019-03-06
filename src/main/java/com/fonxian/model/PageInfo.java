@@ -9,8 +9,12 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @author lcc
- * @since 2016-05-23 22:26
+ * <p>
+ * 页面信息类
+ * </p >
+ *
+ * @author Michael Fang
+ * @since 2019-02-28
  */
 public class PageInfo implements Serializable {
 

@@ -4,13 +4,12 @@
 
 package com.fonxian.lucene;
 
+import com.fonxian.constant.IndexOptConstant;
 import com.fonxian.model.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.IndexableField;
+import org.apache.lucene.index.*;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -27,8 +26,12 @@ import java.nio.file.FileSystems;
 import java.util.*;
 
 /**
- * @author lcc
- * @since 2016-05-21 11:52
+ * <p>
+ * Lucene 工具类
+ * </p >
+ *
+ * @author Michael Fang
+ * @since 2019-02-28
  */
 public class LuceneUtil {
     public static final String INDEX_PATH;
@@ -52,19 +55,27 @@ public class LuceneUtil {
     /**
      * 删除索引
      */
-    public synchronized static void delIndex() {
+    public synchronized static boolean delIndex(int type, String term) {
 
         try {
             Directory dictionary = getIndexDocument();
             IndexWriterConfig indexWriterConfig = new IndexWriterConfig(ANALYZER);
             IndexWriter indexWriter = new IndexWriter(dictionary, indexWriterConfig);
-            indexWriter.deleteAll();
+            //删除所有索引
+            if (type == IndexOptConstant.INDEX_DEL_TYPE_ALL) {
+                indexWriter.deleteAll();
+            }
+            //删除包含某个词项的索引
+            if (type == IndexOptConstant.INDEX_DEL_TYPE_TERM && StringUtils.isNoneBlank(term)) {
+                indexWriter.deleteDocuments(new Term("content", term));
+            }
             indexWriter.commit();
             indexWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+        return true;
 
     }
 

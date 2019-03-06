@@ -15,8 +15,12 @@ import org.wltea.analyzer.core.Lexeme;
 import java.io.IOException;
 
 /**
- * @author lcc
- * @since 2016-05-21 11:59
+ * <p>
+ * description
+ * </p >
+ *
+ * @author Michael Fang
+ * @since 2019-02-28
  */
 public class IKTokenizer5x extends Tokenizer {
     private final CharTermAttribute termAtt = (CharTermAttribute) this.addAttribute(CharTermAttribute.class);

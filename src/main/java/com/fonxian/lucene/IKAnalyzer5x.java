@@ -7,8 +7,12 @@ package com.fonxian.lucene;
 import org.apache.lucene.analysis.Analyzer;
 
 /**
- * @author lcc
- * @since 2016-05-21 12:00
+ * <p>
+ * description
+ * </p >
+ *
+ * @author Michael Fang
+ * @since 2019-02-28
  */
 public class IKAnalyzer5x extends Analyzer {
 
