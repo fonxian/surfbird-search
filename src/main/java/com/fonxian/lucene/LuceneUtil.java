@@ -216,10 +216,9 @@ public class LuceneUtil {
 
     }
 
-    //
-
     /**
      * 对一个查询词进行分词
+     * TODO 查询句子时的处理
      * @param text
      * @return
      * @throws IOException
