@@ -89,7 +89,7 @@ public class IndexController {
      */
     @RequestMapping("/delTerm/{term}")
     @ResponseBody
-    public boolean delTerm(@PathVariable("term")String term) {
+    public boolean delTerm(@PathVariable("term") String term) {
         try {
             return LuceneUtil.delIndex(IndexOptConstant.INDEX_DEL_TYPE_TERM, term);
         } catch (Exception e) {
@@ -97,6 +97,23 @@ public class IndexController {
         }
 
     }
+
+    /**
+     * 更新索引
+     *
+     * @return
+     */
+    @RequestMapping("/updateIndex/{term}/{newContent}")
+    @ResponseBody
+    public boolean updateIndexAboutTerm(@PathVariable("term") String term, @PathVariable("newContent") String newContent) {
+        try {
+            return LuceneUtil.updateIndex(term, newContent);
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+
 
     /**
      * 关闭爬虫

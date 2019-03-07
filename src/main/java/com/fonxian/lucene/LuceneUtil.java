@@ -4,11 +4,16 @@
 
 package com.fonxian.lucene;
 
+import com.fonxian.constant.FieldTypeConstant;
 import com.fonxian.constant.IndexOptConstant;
 import com.fonxian.model.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.*;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
@@ -18,10 +23,14 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.springframework.util.ResourceUtils;
+import org.wltea.analyzer.cfg.Configuration;
+import org.wltea.analyzer.cfg.DefaultConfig;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 import sun.text.normalizer.VersionInfo;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.file.FileSystems;
 import java.util.*;
 
@@ -69,6 +78,33 @@ public class LuceneUtil {
             if (type == IndexOptConstant.INDEX_DEL_TYPE_TERM && StringUtils.isNoneBlank(term)) {
                 indexWriter.deleteDocuments(new Term("content", term));
             }
+
+            indexWriter.commit();
+            indexWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return true;
+
+    }
+
+    /**
+     * 更新索引
+     */
+    public synchronized static boolean updateIndex(String term, String newContent) {
+
+        try {
+            Directory dictionary = getIndexDocument();
+            IndexWriterConfig indexWriterConfig = new IndexWriterConfig(ANALYZER);
+            IndexWriter indexWriter = new IndexWriter(dictionary, indexWriterConfig);
+            Document doc = new Document();
+
+            doc.add(new Field("title", "测试一下", FieldTypeConstant.TYPE_NOT_INDEX));
+            doc.add(new Field("url", "https://www.baidu.com", FieldTypeConstant.TYPE_INDEX_TERM));
+            doc.add(new Field("content", newContent, FieldTypeConstant.TYPE_INDEX));
+            //注意对搜索词进行分词，Linux分词后的结果为linux。若不分词，term为Linux，匹配不到文档
+            indexWriter.updateDocument(new Term("content", tokenSearchTerm(term)), doc);
             indexWriter.commit();
             indexWriter.close();
         } catch (IOException e) {
@@ -178,6 +214,27 @@ public class LuceneUtil {
         }
         return new SimpleFSDirectory(FileSystems.getDefault().getPath(path));
 
+    }
+
+    //
+
+    /**
+     * 对一个查询词进行分词
+     * @param text
+     * @return
+     * @throws IOException
+     */
+    private static String tokenSearchTerm(String text) throws IOException {
+        TokenStream ts = ANALYZER.tokenStream("content", text);
+        ts.reset();
+        CharTermAttribute cta = ts.getAttribute(CharTermAttribute.class);
+        String result = "";
+        while (ts.incrementToken()) {
+            result = cta.toString();
+        }
+        ts.end();
+        ts.close();
+        return result;
     }
 
 }
