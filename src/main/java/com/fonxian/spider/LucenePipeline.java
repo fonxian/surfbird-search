@@ -44,9 +44,12 @@ public class LucenePipeline implements Pipeline, Closeable {
             }
         }
         Document doc = new Document();
-        doc.add(new Field("title", resultItems.getAll().get("title").toString(), FieldTypeConstant.TYPE_NOT_INDEX));
+        Field title = new Field("title", resultItems.getAll().get("title").toString(), FieldTypeConstant.TYPE_INDEX);
+        Field content = new Field("content", resultItems.getAll().get("content").toString(), FieldTypeConstant.TYPE_INDEX);
+        title.setBoost(1.5F);
+        doc.add(title);
+        doc.add(content);
         doc.add(new Field("url", resultItems.getRequest().getUrl(), FieldTypeConstant.TYPE_INDEX_TERM));
-        doc.add(new Field("content", resultItems.getAll().get("content").toString(), FieldTypeConstant.TYPE_INDEX));
         index.update(resultItems.getRequest().getUrl(), doc);
     }
 

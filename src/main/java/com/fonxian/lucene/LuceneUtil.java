@@ -100,7 +100,7 @@ public class LuceneUtil {
             IndexWriter indexWriter = new IndexWriter(dictionary, indexWriterConfig);
             Document doc = new Document();
 
-            doc.add(new Field("title", "测试一下", FieldTypeConstant.TYPE_NOT_INDEX));
+            doc.add(new Field("title", "测试一下", FieldTypeConstant.TYPE_INDEX_TERM));
             doc.add(new Field("url", "https://www.baidu.com", FieldTypeConstant.TYPE_INDEX_TERM));
             doc.add(new Field("content", newContent, FieldTypeConstant.TYPE_INDEX));
             //注意对搜索词进行分词，Linux分词后的结果为linux。若不分词，term为Linux，匹配不到文档
