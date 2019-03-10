@@ -2,6 +2,7 @@
 <head>
     <title>千鸟搜索</title>
     <script src="${request.contextPath}/static/js/jquery-1.11.1.min.js"></script>
+    <script src="${request.contextPath}/static/js/test.js"></script>
     <link href="${request.contextPath}/static/css/style.css" rel="stylesheet" type="text/css"/>
     <style type="text/css">
         .queryForm {

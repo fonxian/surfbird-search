@@ -13,21 +13,16 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.*;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.highlight.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.springframework.util.ResourceUtils;
-import org.wltea.analyzer.cfg.Configuration;
-import org.wltea.analyzer.cfg.DefaultConfig;
-import org.wltea.analyzer.lucene.IKAnalyzer;
-import sun.text.normalizer.VersionInfo;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
@@ -177,17 +172,29 @@ public class LuceneUtil {
             List<Map<String, String>> result = new ArrayList<Map<String, String>>();
             int start = (pageNum - 1) * pageSize;
             int end = start + pageSize;
+
+            SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<span style=\"color:red\">", "</span>");
+            Highlighter highlighter = new Highlighter(simpleHTMLFormatter, new QueryScorer(query));
+
             //此处需要优化，若返回结果集过大，可能会超出内存
             //TODO
             for (int i = start; i < end && i < total; i++) {
                 Map<String, String> map = new HashMap<String, String>();
                 //通过文档ID从磁盘中获取对应文档
                 Document hitDoc = searcher.doc(hits[i].doc);
+
                 for (Iterator<IndexableField> iter = hitDoc.iterator(); iter.hasNext(); ) {
                     IndexableField field = iter.next();
                     String value = field.stringValue();
-                    if (field.name().equals("content") && value.length() > 200) {
-                        value = value.substring(0, 200) + "...";
+                    if (field.name().equals("content")) {
+
+                        //添加关键字高亮
+                        TokenStream tokenStream = ANALYZER.tokenStream("content", new StringReader(value));
+                        value = highlighter.getBestFragment(tokenStream, value);
+                        if (value.length() > 400) {
+                            value = value.substring(0, 400) + "...";
+                            System.out.println(value);
+                        }
                     }
                     map.put(field.name(), value);
                 }
@@ -219,6 +226,7 @@ public class LuceneUtil {
     /**
      * 对一个查询词进行分词
      * TODO 查询句子时的处理
+     *
      * @param text
      * @return
      * @throws IOException

@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class SearchController {
 
-
     @RequestMapping({"", "index", "query"})
     public ModelAndView query(String q,
                               @RequestParam(required = false, defaultValue = "1") Integer page,
