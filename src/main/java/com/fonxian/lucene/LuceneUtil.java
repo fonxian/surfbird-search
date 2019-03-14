@@ -176,7 +176,7 @@ public class LuceneUtil {
             int start = (pageNum - 1) * pageSize;
             int end = start + pageSize;
 
-            SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<span style=\"color:red\">", "</span>");
+            SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<em>", "</em>");
             Highlighter highlighter = new Highlighter(simpleHTMLFormatter, new QueryScorer(query));
 
             //此处需要优化，若返回结果集过大，可能会超出内存
