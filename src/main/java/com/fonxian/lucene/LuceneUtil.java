@@ -41,7 +41,8 @@ import java.util.*;
  */
 public class LuceneUtil {
     public static final String INDEX_PATH;
-    private static final Analyzer ANALYZER = new IKAnalyzer5x(true);
+    public static final String SYNONYMS_PATH;
+    private static final Analyzer ANALYZER;
     private static int count = 0;
     private static Index index = null;
 
@@ -55,6 +56,8 @@ public class LuceneUtil {
             e.printStackTrace();
         } finally {
             INDEX_PATH = index;
+            SYNONYMS_PATH = LuceneUtil.class.getClassLoader().getResource("").getPath() + "lucene/synonyms/synonyms.txt";
+            ANALYZER = new IKSynonymsAnalyzer(SYNONYMS_PATH);
         }
     }
 

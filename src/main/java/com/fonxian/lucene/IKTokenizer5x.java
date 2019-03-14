@@ -22,7 +22,7 @@ import java.io.IOException;
  * @author Michael Fang
  * @since 2019-02-28
  */
-public class IKTokenizer5x extends Tokenizer {
+public final class IKTokenizer5x extends Tokenizer {
     private final CharTermAttribute termAtt = (CharTermAttribute) this.addAttribute(CharTermAttribute.class);
     private final OffsetAttribute offsetAtt = (OffsetAttribute) this.addAttribute(OffsetAttribute.class);
     private final TypeAttribute typeAtt = (TypeAttribute) this.addAttribute(TypeAttribute.class);
