@@ -475,6 +475,24 @@
             margin-bottom: 1px;
         }
 
+        a:link, #prs a:visited, #prs a:active {
+            color: #353535;
+        }
+
+        a:link {
+            cursor: pointer;
+        }
+
+        .item-url {
+            text-decoration: none;
+        }
+
+        a:-webkit-any-link {
+            color: -webkit-link;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 <body>
