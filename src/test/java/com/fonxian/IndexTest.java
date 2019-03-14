@@ -1,4 +1,4 @@
-package com.fonxian.test;
+package com.fonxian;
 
 /**
  * <p>

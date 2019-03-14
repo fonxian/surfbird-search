@@ -14,6 +14,7 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.*;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -23,6 +24,7 @@ import org.apache.lucene.search.highlight.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.springframework.util.ResourceUtils;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
@@ -158,7 +160,8 @@ public class LuceneUtil {
             DirectoryReader reader = DirectoryReader.open(dictionary);
             IndexSearcher searcher = new IndexSearcher(reader);
             //创建查询对象（默认搜索域，分词器）
-            QueryParser parser = new QueryParser("content", ANALYZER);
+//            QueryParser parser = new QueryParser("content", ANALYZER);
+            QueryParser parser = new MultiFieldQueryParser(new String[]{"title", "content"}, ANALYZER);
             //查询语法
             Query query = parser.parse(q);
 //            DuplicateFilter filter = new DuplicateFilter("content");
@@ -186,14 +189,16 @@ public class LuceneUtil {
                 for (Iterator<IndexableField> iter = hitDoc.iterator(); iter.hasNext(); ) {
                     IndexableField field = iter.next();
                     String value = field.stringValue();
-                    if (field.name().equals("content")) {
-
+                    String fieldName = field.name();
+                    if (fieldName.equals("content") || fieldName.equals("title")) {
                         //添加关键字高亮
-                        TokenStream tokenStream = ANALYZER.tokenStream("content", new StringReader(value));
-                        value = highlighter.getBestFragment(tokenStream, value);
+                        TokenStream tokenStream = ANALYZER.tokenStream(fieldName, new StringReader(value));
+                        String highlighterValue = highlighter.getBestFragment(tokenStream, value);
+                        if (StringUtils.isNoneBlank(highlighterValue)) {
+                            value = highlighterValue;
+                        }
                         if (value.length() > 400) {
                             value = value.substring(0, 400) + "...";
-                            System.out.println(value);
                         }
                     }
                     map.put(field.name(), value);

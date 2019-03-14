@@ -1,4 +1,4 @@
-package com.fonxian.test;
+package com.fonxian;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
