@@ -58,9 +58,20 @@ public class IKSynonymsAnalyzer extends Analyzer {
             factory.inform(new ClasspathResourceLoader());
             return factory;
         }
+        String name;
+        String dir;
+        String tempPath;
         int index = synonymsPath.lastIndexOf(File.separator);
-        String dir = synonymsPath.substring(0,index);
-        String name = synonymsPath.substring(index+1);
+        if(index == -1){
+            index = synonymsPath.lastIndexOf("/");
+            tempPath= synonymsPath.substring(1,synonymsPath.length());
+            name = tempPath.substring(index);
+            dir = tempPath.substring(0,index);
+        }else{
+            name = synonymsPath.substring(index+1);
+            dir = synonymsPath.substring(0,index);
+        }
+
         Map args = new HashMap<>();
         args.put("synonyms", name);
         SynonymFilterFactory factory = new SynonymFilterFactory(args);
