@@ -240,7 +240,7 @@
             color: #333;
             background: #fff;
             padding: 6px 0 0;
-            margin: 0;
+            margin: -3px;
             position: relative;
             min-width: 900px;
         }
@@ -273,7 +273,7 @@
 
         #head {
             padding: 0;
-            margin: 0;
+            margin: -3px;
             width: 100%;
             position: absolute;
             z-index: 301;
@@ -338,22 +338,16 @@
             text-align: left;
             height: 42px;
             line-height: 42px;
-            margin-top: 40px;
+            margin-top: 20px;
             *margin-top: 0;
-        }
-
-        #foot {
-            height: 20px;
-            line-height: 20px;
             color: #77c;
-            background: #e6e6e6;
-            text-align: center;
         }
-
         #foot span {
             color: #666;
         }
-
+        #u, #head, #foot {
+             font-size: 12px;
+        }
         #help {
             background: #f5f6f5;
             zoom: 1;
@@ -415,7 +409,7 @@
 
         #page {
             padding: 0 0 0 121px;
-            margin: 30px 0 40px;
+            margin: 830px 0 40px;
         }
 
         #page {
@@ -520,18 +514,10 @@
                     <tbody>
                     <tr>
                         <td align="left">
-
-
                             <div id="con-ar" class="result_hidden" style="position: static;">
-
-
                                 <div class="result-op xpath-log" tpl="right_toplist1"
                                      data-click="{&quot;fm&quot;:&quot;alxr&quot;,&quot;p1&quot;:1,&quot;mu&quot;:&quot;http://top.baidu.com/buzz?b=1&quot;,&quot;rsv_stl&quot;:&quot;0&quot;,&quot;rsv_srcid&quot;:20811,&quot;p5&quot;:11}">
-
-
                                     <div class="cr-content ">
-
-
                                         <div class="FYB_RD">
                                             <div class="cr-title opr-toplist1-title" title="搜索热点">
                                                 <div class="opr-toplist1-update" data-click="{fm:'beha'}">
@@ -596,28 +582,18 @@
                                                     <td class="opr-toplist1-right">1303万<i
                                                             class="opr-toplist1-st c-icon "></i></td>
                                                 </tr>
-
-
                                                 </tbody>
-
                                             </table>
                                             <div class="OP_LOG_BTN c-gap-top-small opr-toplist1-from">
                                                 <a target="_blank"
                                                    href="https://www.baidu.com/link?url=ODFEflzCA1GBL8hwHBtZeHPcpJJbMxLlJIZyJWoHNvEGQ5DmJVO6bjmcQ0sGwTx5&amp;wd=&amp;eqid=de81beae000e1653000000065c8a756a">查看更多&gt;&gt;</a>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
-
-
                             </div>
-
-
                             <div>
                             </div>
-
-
                         </td>
                     </tr>
                     </tbody>
@@ -649,13 +625,9 @@
 
             </div>
             <div id="page">
-
-
                         <#if page.hasPreviousPage>
-
                                 <a href="${request.contextPath}/query?page=1&rows=10&q=${q}">首页</a>
                                 <a href="${request.contextPath}/query?page=${page.prePage}&rows=10&q=${q}">前一页</a>
-
                         </#if>
                         <#list page.navigatepageNums as nav>
                             <#if nav == page.pageNum>
@@ -664,21 +636,14 @@
                                 </strong>
                             </#if>
                             <#if nav != page.pageNum>
-
                                     <a href="${request.contextPath}/query?page=${nav}&rows=10&q=${q}">${nav}</a>
-
                             </#if>
                         </#list>
                         <#if page.hasNextPage>
-
                                 <a href="${request.contextPath}/query?page=${page.nextPage}&rows=10&q=${q}">下一页</a>
                                 <a href="${request.contextPath}/query?page=${page.pages}&rows=10&q=${q}">尾页</a>
-
                         </#if>
-
-
             </div>
-
             </#if>
         </div>
         <div id="foot">
@@ -688,7 +653,7 @@
                     <a>举报</a>
                     <a>用户反馈</a>
                 </span>
-            </div>
+        </div>
         </div>
     </div>
 </body>
