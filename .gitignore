@@ -122,3 +122,7 @@ fabric.properties
 *.classpath
 *.factorypath
 .vscode/
+
+# not
+
+!IKAnalyzer2012_FF.jar
