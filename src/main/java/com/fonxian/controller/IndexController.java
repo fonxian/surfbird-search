@@ -25,6 +25,8 @@ public class IndexController {
 
     private static Spider spider = null;
 
+    private static final String BLOG_LIST_PREFIX = "https://www.cnblogs.com/#p";
+
     private static synchronized Spider start() {
         if (spider == null) {
             spider = Spider.create(new CnblogProcessor()).setScheduler(new QueueScheduler()
@@ -57,7 +59,9 @@ public class IndexController {
         ModelMap result = new ModelMap();
         Spider spider = start();
         if (spider != null) {
-            spider.addUrl(url);
+            for(int i = 1;i<=20;i++){
+                spider.addUrl(BLOG_LIST_PREFIX+i);
+            }
             spider.thread(tc).start();
             result.put("msg", "启动爬虫开始索引数据");
         } else {

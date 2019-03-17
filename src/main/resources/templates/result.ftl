@@ -385,6 +385,10 @@
             *padding: 14px 0;
         }
 
+        .head_nums_cont_inner {
+            position: relative;
+        }
+
         .nums {
             width: 538px;
         }
@@ -423,6 +427,7 @@
             height: 34px;
             border: 1px solid #e1e2e3;
             cursor: pointer;
+            margin-left: 99px;
         }
 
         #page .n:hover, #page a:hover .pc {
@@ -485,6 +490,25 @@
             color: -webkit-link;
             cursor: pointer;
             text-decoration: underline;
+        }
+
+        #page strong .pc {
+            border: 0;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+        }
+
+        #page a, #page strong {
+            display: inline-block;
+            vertical-align: text-bottom;
+            height: 66px;
+            text-align: center;
+            line-height: 34px;
+            text-decoration: none;
+            overflow: hidden;
+            margin-right: 9px;
+            background: #fff;
         }
 
     </style>
@@ -600,7 +624,7 @@
                 </table>
             </div>
             <div class="head_nums_cont_outer OP_LOG">
-                <div class="head_nums_cont_inner">
+                <div class="head_nums_cont_inner" style="top:-42px">
                         <div class="search_tool_conter"></div>
                         <div class="nums">
                             <span class="nums_text">千鸟为您找到相关结果约${page.total}个</span>
@@ -631,7 +655,7 @@
                         </#if>
                         <#list page.navigatepageNums as nav>
                             <#if nav == page.pageNum>
-                                <strong style="font-weight: bold;">
+                                <strong>
                                     <span class="pc">${nav}</span>
                                 </strong>
                             </#if>

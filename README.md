@@ -27,4 +27,4 @@ curl http://127.0.0.1:8080
 
 搜索页
 
-![image.png](img/search-2.png)
+![image.png](img/search-3.png)
