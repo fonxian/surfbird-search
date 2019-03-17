@@ -88,7 +88,7 @@
             <artifactId>lucene-highlighter</artifactId>
             <version>${lucene.version}</version>
         </dependency>
-
+        <!-- mvn install:install-file -Dfile=IKAnalyzer2012_FF.jar -DgroupId=ik -DartifactId=ik -Dversion=1.0 -Dpackaging=jar -->
         <dependency>
             <groupId>ik</groupId>
             <artifactId>ik</artifactId>

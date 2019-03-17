@@ -2,14 +2,19 @@
 
 
 # 运行方法
+1、引入Jar包到Maven依赖
 
-1、启动Application
+```
+mvn install:install-file -Dfile=IKAnalyzer2012_FF.jar -DgroupId=ik -DartifactId=ik -Dversion=1.0 -Dpackaging=jar
+```
 
-2、请求爬取数据、创建索引
+2、启动Application
+
+3、请求爬取数据、创建索引
 ```
 curl http://127.0.0.1:8080/datas/index
 ```
-3、访问首页
+4、访问首页
 ```
 curl http://127.0.0.1:8080
 ```
